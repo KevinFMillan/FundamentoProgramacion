@@ -35,10 +35,10 @@ public class GenerateInfoFiles {
 			}
 			doc.flush();
 			doc.close();
-
 		} catch (IOException e) {
 			System.out.println("Error en Vendedores " + e.getMessage());
 		}
+		System.out.println("Creacion de archivo 'Vendedores.csv' Exitoso");
 	}
 
 	public static void GenerarProductos(int cantProductos) {
@@ -71,6 +71,7 @@ public class GenerateInfoFiles {
 		} catch (IOException e) {
 			System.out.println("Error en Productos " + e.getMessage());
 		}
+		System.out.println("Creacion de archivo 'Productos.csv' Exitoso");
 	}
 
 	public static void GenerarInfoVentas() {
@@ -101,10 +102,10 @@ public class GenerateInfoFiles {
 				
 				String[] infoVendedores = lineVendedores.split(";");
 				
-				nameDoc = "Ventas "+infoVendedores[2]+infoVendedores[3]+infoVendedores[1]+".csv";
+				nameDoc = "Ventas "+infoVendedores[2]+" "+infoVendedores[3]+" "+infoVendedores[1]+".csv";
 				
 				FileWriter docVentas = new FileWriter(nameDoc);
-				docVentas.append(infoVendedores[0]+";"+infoVendedores[1] + "\n"); //hasta aqui vamos ok
+				docVentas.append(infoVendedores[0]+";"+infoVendedores[1] + "\n");
 				
 				for (int i = 0; i < rand.nextInt(5,20); i++) {
 					indice = IDs.get(rand.nextInt(0,cantProductos-1));
@@ -113,6 +114,7 @@ public class GenerateInfoFiles {
 				}
 				docVentas.flush();
 				docVentas.close();
+				System.out.println("Creacion de archivo '"+nameDoc+"' Exitoso");
 			}
 			
 			docVendedores.close();
