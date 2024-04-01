@@ -1,12 +1,12 @@
 package news;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class GenerateInfoFiles {
 
@@ -79,7 +79,7 @@ public class GenerateInfoFiles {
 		Random rand = new Random();
 		String lineVendedores, lineProductos = null;
 		ArrayList<Integer> IDs = new ArrayList<Integer>();
-		ArrayList<Integer> repetidos = new ArrayList<Integer>();
+		ArrayList<Integer> repetidos = new ArrayList<Integer>(); // se usara mas adelate
 		
 		try {
 			
@@ -125,12 +125,53 @@ public class GenerateInfoFiles {
 		}
 	}
 
+	public static void ProcesarProductos(File archivoProductos) {
+		try (BufferedReader br = new BufferedReader(new FileReader(archivoProductos))){
+			String linea;
+			System.out.println("Información de Productos:");
+			while ((linea = br.readLine()) != null) {
+				String[] partes = linea.split(";");
+				System.out.println("ID: " + partes[0] + ", Nombre: " + partes[1] + ", Precio: " + partes[2]);
+			}
+			System.out.println();
+		} catch (IOException e) {
+			System.err.println("Error al leer el archivo de productos: " + e.getMessage());
+		}
+	}
+	
+	public static void ProcesarVendedores(File archivoVendedores) {
+		try (BufferedReader br = new BufferedReader(new FileReader(archivoVendedores))){
+			String linea;
+			System.out.println("Información de Vendedores:");
+			while ((linea = br.readLine()) != null) {
+				String[] partes = linea.split(";");
+				System.out.println("Tipo: " + partes[0] + ", Número: " + partes[1] + ", Nombres: " + partes[2] + ", Apellidos: " + partes[3]);
+			}
+			System.out.println();
+		} catch (IOException e) {
+			System.err.println("Error al leer el archivo de vendedores: " + e.getMessage());
+		}
+	}
+	
 	public static void main(String[] args) {
 
-		GenerarVendedores(15);
-
-		GenerarProductos(30);
-
+		GenerarVendedores(5);
+//
+		GenerarProductos(10);
+//
 		GenerarInfoVentas();
+		
+	 String directorio = System.getProperty("user.dir"); //obtener la ruta a los archivos donde se alojan los .csv
+
+	 File carpeta = new File(directorio);
+		
+		if (carpeta.exists() && carpeta.isDirectory()) {
+			
+			ProcesarProductos(new File(carpeta, "Productos.csv"));
+			ProcesarVendedores(new File(carpeta, "Vendedores.csv"));
+		}
+		else {
+			System.out.println("Eldirectorio especificado no existe o no es un directorio válido.");
+		}
 	}
 }
