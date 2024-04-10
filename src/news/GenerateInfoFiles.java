@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class GenerateInfoFiles {
 
-	public static void GenerarVendedores(int cantVendedores) {
+	public static void CreateSalesManInfoFile(int salesmanCount) { //crea el .csv con los nombres de los vendedores
 		Random rand = new Random();
 
 		String[] names = { "Kevin", "Andres", "Juan", "Valentina", "Camila", "Natalia", "Jorge", "Roberto", "Maria",
@@ -24,7 +24,7 @@ public class GenerateInfoFiles {
 		try {
 			FileWriter doc = new FileWriter("Vendedores.csv");
 
-			for (int i = 0; i < cantVendedores; i++) {
+			for (int i = 0; i < salesmanCount; i++) {
 				
 				name = names[rand.nextInt(0, names.length - 1)] + " " + names[rand.nextInt(0, names.length - 1)];
 				apellido = apellidos[rand.nextInt(0, names.length - 1)] + " " + apellidos[rand.nextInt(0, names.length - 1)];
@@ -41,7 +41,7 @@ public class GenerateInfoFiles {
 		System.out.println("Creacion de archivo 'Vendedores.csv' Exitoso");
 	}
 
-	public static void GenerarProductos(int cantProductos) {
+	public static void CreateProductsFile(int productsCount) { // crea el .csv con los productos
 		Random rand = new Random();
 
 		String[] names = { "Lapiz", "Corrector", "Maleta", "Borrador", "Pegante", "Camisa", "Pantalon", "Gorrar",
@@ -50,12 +50,12 @@ public class GenerateInfoFiles {
 				"Sombrilla", "Espejo", "Antena", "Teclado", "Mouse", "Padmouse", "Celular", "Cargador", "Atomizador",
 				"Camara", "Vaso", "Colador", "Exprimidor", "Licuadora", "Rodillo", "Almohada" };
 		int ID = 1;
-		int precioBase = 100;
+		int precioBase = 1000; //este valor se va multiplicar con un numero aleatorio > 0 para definir su precio
 		ArrayList<Integer> IDs = new ArrayList<Integer>();
 		try {
 			FileWriter doc = new FileWriter("Productos.csv");
 
-			for (int i = 0; i < cantProductos; i++) {
+			for (int i = 0; i < productsCount; i++) {
 
 				String name = names[rand.nextInt(0,names.length)];
 
@@ -74,7 +74,7 @@ public class GenerateInfoFiles {
 		System.out.println("Creacion de archivo 'Productos.csv' Exitoso");
 	}
 
-	public static void GenerarInfoVentas() {
+	public static void CreateSalesMenFiles() { // crea el .csv de ventas para el vendedor pasado en el parametro
 		
 		Random rand = new Random();
 		String lineVendedores, lineProductos = null;
@@ -155,23 +155,23 @@ public class GenerateInfoFiles {
 	
 	public static void main(String[] args) {
 
-		GenerarVendedores(5);
-//
-		GenerarProductos(10);
-//
-		GenerarInfoVentas();
+		CreateSalesManInfoFile(5);
+
+		CreateProductsFile(10);	
+
+		CreateSalesMenFiles(); //Genera un .csv por cada vendedor con el informe de las ventas
 		
 	 String directorio = System.getProperty("user.dir"); //obtener la ruta a los archivos donde se alojan los .csv
 
 	 File carpeta = new File(directorio);
 		
-		if (carpeta.exists() && carpeta.isDirectory()) {
+		if (carpeta.exists() && carpeta.isDirectory()) { // Comprueba si la ruta es valida y si realmente existe la carpeta
 			
 			ProcesarProductos(new File(carpeta, "Productos.csv"));
 			ProcesarVendedores(new File(carpeta, "Vendedores.csv"));
 		}
 		else {
-			System.out.println("Eldirectorio especificado no existe o no es un directorio válido.");
+			System.out.println("El directorio especificado no existe o no es un directorio válido.");
 		}
 	}
 }
