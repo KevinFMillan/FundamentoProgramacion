@@ -1,6 +1,7 @@
 package news;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Main {
@@ -107,7 +108,7 @@ public class Main {
  	        String linea;
  	        while ((linea = br.readLine()) != null) {
  	            String[] partes = linea.split(";");
- 	            preciosProductos.put(partes[1], Double.parseDouble(partes[2]));
+ 	            preciosProductos.put(partes[0], Double.parseDouble(partes[2]));
  	        }
  	    } catch (IOException e) {
  	        System.err.println("Error al leer el archivo de productos: " + e.getMessage());
@@ -122,13 +123,19 @@ public class Main {
  	            double totalVentas = 0;
  	            String nombreArchivoVentas = "Ventas " + partes[2] + " " + partes[3] + " " + partes[1] + ".csv";
  	            File archivoVentas = new File(nombreArchivoVentas);
+ 	            boolean primeraLinea = true;
  	            try (BufferedReader brVentas = new BufferedReader(new FileReader(archivoVentas))) {
  	                String lineaVenta;
  	                while ((lineaVenta = brVentas.readLine()) != null) {
+ 	                	if (primeraLinea) {
+ 	                		primeraLinea = false;
+ 	                		continue;
+ 	                	}
+ 	                	
  	                    String[] partesVenta = lineaVenta.split(";");
- 	                    String nombreProducto = partesVenta[0];
- 	                    if (preciosProductos.containsKey(nombreProducto)) {
- 	                        double precioProducto = preciosProductos.get(nombreProducto);
+ 	                    String codigoProducto = partesVenta[0];
+ 	                    if (preciosProductos.containsKey(codigoProducto)) {
+ 	                        double precioProducto = preciosProductos.get(codigoProducto);
  	                        int cantidad = Integer.parseInt(partesVenta[1]);
  	                        totalVentas += precioProducto * cantidad;
  	                    }
@@ -149,8 +156,9 @@ public class Main {
 
  	    // Escribir la información de los vendedores en un archivo CSV
  	    try (FileWriter writer = new FileWriter("Reporte_Ventas_Vendedores.csv")) {
+ 	    	DecimalFormat df = new DecimalFormat("#,###");
  	        for (Map.Entry<String, Double> vendedor : listaVendedores) {
- 	            writer.write(vendedor.getKey() + ";" + vendedor.getValue() + "\n");
+ 	            writer.write(vendedor.getKey() + ";" + df.format(vendedor.getValue()) + "\n");
  	        }
  	        System.out.println("Creación de archivo 'Reporte_Ventas_Vendedores.csv' exitoso");
  	    } catch (IOException e) {
