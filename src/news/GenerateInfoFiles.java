@@ -74,7 +74,6 @@ public class GenerateInfoFiles {
 		Random rand = new Random();
 		String lineVendedores, lineProductos = null;
 		ArrayList<Integer> IDs = new ArrayList<Integer>();
-		ArrayList<Integer> repetidos = new ArrayList<Integer>(); // se usara mas adelate
 		
 		try {
 			
