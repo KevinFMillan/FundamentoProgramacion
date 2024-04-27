@@ -16,7 +16,7 @@ public class Main {
 		generateSalesReport(new File("Vendedores.csv"), new File("Productos.csv"));
 
 		// Genera el reporte de productos vendidos
-		generateProductSalesReport(directorio);
+		generateProductSalesReport(new File(carpeta, "Productos.csv"), directorio);
 		
 		if (carpeta.exists() && carpeta.isDirectory()) { // Comprobar si la ruta es válida y si realmente existe la carpeta
 			ProcesarProductos(new File(carpeta, "Productos.csv"));
@@ -26,78 +26,83 @@ public class Main {
 		}
 		System.out.println("Archivos de reporte generados exitosamente.");
 	}
-
+	
 	// Función para generar el archivo de reporte de productos vendidos por cantidad
-	public static void generateProductSalesReport(String directorio) {
+	public static void generateProductSalesReport(File archivoex ,String directorio) {
+		
 		// Mapa para almacenar la cantidad total vendida de cada producto
 		Map<String, Integer> ventasPorProducto = new HashMap<>();
 
-		// Mapa para almacenar el precio de cada producto //// override: por medio del id, almacenar nombre
-		Map<String, String> preciosProductos = new HashMap<>();
+		// Mapa para almacenar el nombre de los productos y la cantidad total vedida
+		Map<String, String> informeProductos = new HashMap<>();
 
 		// Leer los archivos de ventas de los vendedores y calcular la cantidad total vendida de cada producto
 		try {
 			File carpeta = new File(directorio);
-			File[] archivosVentas = carpeta.listFiles((dir, name) -> name.startsWith("Ventas")); //archivo[0]=idproducto /// archivo[1]=cantidad vendida
-
+			File[] archivosVentas = carpeta.listFiles((dir, name) -> name.startsWith("Ventas"));
 			if (archivosVentas != null) {
 				for (File archivo : archivosVentas) {
 					try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
 						String linea;
 						while ((linea = br.readLine()) != null) {
-							String[] partes = linea.split(";");
-							String nombreProducto = partes[0];
-							int cantidad = Integer.parseInt(partes[1]);
-							ventasPorProducto.put(nombreProducto,
-									ventasPorProducto.getOrDefault(nombreProducto, 0) + cantidad);
+							if (linea.contains("C.C")) { // se omite la primera linea de los archivos ya que esta informacion no nos interesa
+							}else {
+								String[] partes = linea.split(";");
+								String nombreProducto = partes[0];
+								int cantidad = Integer.parseInt(partes[1]);
+								ventasPorProducto.put(nombreProducto,
+										ventasPorProducto.getOrDefault(nombreProducto, 0) + cantidad);
+							}
+							
 						}
 					}
+				}
+			}
+			for ( String i : ventasPorProducto.keySet()) {  // se recorre todo el mapa para obtener el ID de los items vendidos
+				try (BufferedReader br = new BufferedReader(new FileReader(archivoex))) {
+					String linea;
+					while ((linea = br.readLine()) != null) {
+						String[] partes = linea.split(";");
+						if (partes[0].equals(i)) { // se compara que el ID del mapa y el archivo sean iguales
+							informeProductos.put(partes[1], String.valueOf(ventasPorProducto.get(i))); // se toma el nombre del File y la cantidad total de mapa anterior
+						}
+					}
+					
+				} catch (IOException e) {
+					System.err.println("Error al leer el archivo de productos: " + e.getMessage());
 				}
 			}
 		} catch (IOException e) {
 			System.err.println("Error al leer los archivos de ventas de los vendedores: " + e.getMessage());
 			return;
-		}
-
-		// Leer la información de los productos y almacenar el precio de cada uno en un mapa
-		try (BufferedReader br = new BufferedReader(new FileReader("Productos.csv"))) {
-			String linea;
-			while ((linea = br.readLine()) != null) {
-				String[] partes = linea.split(";");
-				preciosProductos.put(partes[0], partes[1]); // Almacenar el precio del producto por su nombre ////override= guarda el name en base al id
+		} 
+		System.out.println(informeProductos);
+		ordenarArchivo(informeProductos);
+	}
+	
+	// Funcion para organizar de forma descendente los productos vendidos y crear el .csv
+	public static void ordenarArchivo(Map<String, String> original) {
+		ArrayList<Integer> numeros = new ArrayList<Integer>(); 
+		for (String i : original.values()) { 
+			numeros.add(Integer.valueOf(i)); 
+		} Collections.sort(numeros); 
+		Collections.reverse(numeros); 
+		try {
+			FileWriter doc = new FileWriter("Reporte_Productos_Vendidos.csv");
+			for (Integer i : numeros) { //
+				for (String clave : original.keySet()) {
+					if (original.get(clave).equals(String.valueOf(i))) {
+						doc.write(clave + ";" + original.get(clave) + "\n");
+					}
+				}
 			}
-		} catch (IOException e) {
-			System.err.println("Error al leer el archivo de productos: " + e.getMessage());
-			return;
-		}
-
-		// Mapa para almacenar el valor total de ventas de cada producto
-//		Map<String, Double> valorVentasPorProducto = new HashMap<>();
-//		for (Map.Entry<String, Integer> entry : ventasPorProducto.entrySet()) {
-//			String nombreProducto = entry.getKey();
-//			int cantidad = entry.getValue();
-//			double precioUnitario = preciosProductos.getOrDefault(nombreProducto, 0.0);
-//			double valorTotalVenta = cantidad * precioUnitario;
-//			valorVentasPorProducto.put(nombreProducto, valorTotalVenta);
-//		}
-
-		// Ordenar los productos por cantidad vendida (de mayor a menor)
-		List<Map.Entry<String, Integer>> listaProductos = new ArrayList<>(ventasPorProducto.entrySet());
-		listaProductos.sort((a, b) -> Integer.compare(b.getValue(), a.getValue()));
-		// listaProductos contiene los productos ya ordenados
-
-		// Escribir la información de los productos en un archivo CSV
-		try (FileWriter writer = new FileWriter("Reporte_Productos_Vendidos.csv")) {
-			for (Map.Entry<String, Integer> producto : listaProductos) {
-				double valorTotalVenta = valorVentasPorProducto.getOrDefault(producto.getKey(), 0.0);
-				writer.write(producto.getKey() + ";" + producto.getValue() + ";" + valorTotalVenta + "\n");
-			}
-			System.out.println("Creación de archivo 'Reporte_Productos_Vendidos.csv' exitoso");
-		} catch (IOException e) {
-			System.err.println("Error al escribir el archivo de reporte de productos vendidos: " + e.getMessage());
+			doc.flush();
+			doc.close();
+		}catch (IOException e) {
+		System.out.println("Error en Productos " + e.getMessage());
 		}
 	}
-
+		
 	// Función para generar el archivo de reporte de ventas de los vendedores
 	public static void generateSalesReport(File archivoVendedores, File archivoProductos) {
 		// Mapa para almacenar el valor total de ventas por vendedor
