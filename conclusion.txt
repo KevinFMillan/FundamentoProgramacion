@@ -1,0 +1,42 @@
+Conclusiones
+
+1. Lo aprendido durante el desarrollo del proyecto:
+
+- En un inicio el principal aprendizaje durante el desarrollo ha sido el manejo de Java, donde se ha visto 
+tanto retos como soluciones simples, se ha entendido el mismo uso y la aplicación dentro de los conceptos fundamentales, 
+con su sintaxis clara aunque fuertemente tipada, se aprendió la creación de clases y así mismo de sus usos, en especial
+el que para todos podría ser el más importante POO, la programación orientada a objetos ha sido vitalidad
+dentro del proyecto, sería el fuerte de todos los aprendizajes dentro del desarrollo del proyecto. Asímismo se usaron
+controles de flujos y estructuras de datos que permitieron una mejor organización y alcance del objetivo, todo esto
+en conjunto podemos tomarlo en resumen de que lo aprendido durante este desarrollo ha sido el trabajo en equipo que
+permitió diferentes puntos de vista y así mismo la resolución de los problemas, de ahí parte otro punto donde 
+se llevó a cabo el uso de diferentes herramientas llegando a ver el alcance que tiene el código dentro de nuestra
+vida profesional y diaria
+
+2. Posibles aplicaciones en su vida profesional de las destrezas y conocimientos adquiridos y practicados durante el desarrollo del proyecto
+
+- Estamos hablando de una amplia gama de aplicaciones en la vida profesional, de diseño, de desarrollo, pruebas y
+mantenimiento de sistemas. En la actualidad se ve el crecimiento constante del desarrollo de software, la inteligencia
+artificial y el desarrollo web, todo lo visto acerca de fundamentos de programación nos pone a la vanguardia de forma
+general frente a todos los avances tecnológicos que existen en la actualidad permitiendonos así manejar y tomar
+dominios de diferentes lenguajes, también de optar por diferentes ramas de desarrollo como la automatización de 
+procesos donde se crean programas para poder automatizar tareas repetitivas que mejoran la eficiencia y es un plus
+para diferentes campos, la administración, la contabilidad, además de que aplicamos la identificación de 
+vulnerabilidad en los sistemas permitiendo tener una mayor seguridad informática, y existen muchas otras aplicaciones
+porque el mundo del desarrollo y programación es demasiado extenso, como el desarrollo de videojuegos, 
+la creación de bases de datos, etc. Tenemos destrezas sólidas para tener un crecimiento en la vida profesional y 
+además de eso si quitamos la tecnologia tenemos la lógica, el aprendizaje y determinación de buscar diferentes 
+soluciones para llegar a un resultado que necesita el cliente o que cumple con las problemáticas que podemos 
+tener frente a nuestro diario vivir
+
+3. Las dificultades presentadas durante el desarrollo del proyecto
+
+- La principal dificultad era el manejo y apropiación de Java, la creación de las clases y que funcionaran
+correctamente en un inicio era sencillo, pero al avanzar en el proyecto se vieron problemas de escritura, de 
+orden dentro del código para que todos pudieramos entender el avance individual de cada uno y así mismo llegaban
+los errores que ya no satisfacian lo necesario al código como la creación doble de algunos archivos o que
+información de un archivo terminara dentro de otra sin tener que estar ahí. Principalmente veríamos estas dificultades
+como una primera experiencia enfrentadonos a un entorno de desarrollo que no todos manejabamos, errores simples que
+eran dificiles de encontrar dando por echo que iban a ser complejos, la creación de los métodos, y en especial de
+los objetos. También hubo dificultades al uso de GitHub y terminales para que todos tuviesemos el código al alcance
+y poder contribuir
