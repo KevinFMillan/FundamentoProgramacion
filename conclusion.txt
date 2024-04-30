@@ -39,4 +39,11 @@ información de un archivo terminara dentro de otra sin tener que estar ahí. Pr
 como una primera experiencia enfrentadonos a un entorno de desarrollo que no todos manejabamos, errores simples que
 eran dificiles de encontrar dando por echo que iban a ser complejos, la creación de los métodos, y en especial de
 los objetos. También hubo dificultades al uso de GitHub y terminales para que todos tuviesemos el código al alcance
-y poder contribuir
+y poder contribuir, el uso de mapas y listas fue fundamental para resolver los problemas encontrados al generar 
+los archivos finales. Los mapas nos permitieron almacenar y asociar información clave, como los códigos de 
+productos y vendedores con sus respectivos valores, como precios y cantidades vendidas. Esto facilitó la búsqueda 
+y recuperación eficiente de datos durante el proceso de generación de informes. Además, las listas nos ayudaron 
+a ordenar los elementos según criterios específicos, como la cantidad de productos vendidos, lo que 
+permitió presentar la información de manera organizada y comprensible en los informes finales. En conjunto, el 
+uso adecuado de estas estructuras de datos contribuyó significativamente a la solución de los desafíos encontrados 
+en el proceso de generación de informes.
